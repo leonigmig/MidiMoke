@@ -1,0 +1,13 @@
+<hr/>
+<div class="relations">
+<h3>Navigate: </h3>
+
+<a href="{{ pathto(master_doc) }}">Home</a>
+{%- for parent in parents %}
+<a href="{{ parent.link|e }}">{{ parent.title }}</a>
+{%- endfor %}  
+{%- if next %}
+Next: <a href="{{ next.link|e }}" title="{{ _('next chapter')
+  }}">{{ next.title }}</a>
+{%- endif %}     
+</div>
