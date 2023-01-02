@@ -9,4 +9,4 @@ A journey from millennial claustrophobia to open-ended cosmic consciousness.
    :maxdepth: 1
    :caption: Starting points:
 
-   ./pages/something.rst
+   ./pages/time.rst
