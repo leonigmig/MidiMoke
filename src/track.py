@@ -13,7 +13,7 @@ def midi_device_id_for(device_name):
         return None
 
 
-class MidiPlayer:
+class Voice:
 
     def __init__(self, device_name):
         """Initialize the specified MIDI device."""
