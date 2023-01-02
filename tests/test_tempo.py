@@ -1,3 +1,6 @@
+import unittest
+from midisync import Tempo
+
 class TestTempo(unittest.TestCase):
     def test_get_beat_duration(self):
         tempo = Tempo(120)

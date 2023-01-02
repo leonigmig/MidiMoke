@@ -2,6 +2,17 @@
 from rtmidi.midiconstants import (TIMING_CLOCK, SONG_CONTINUE, SONG_START, SONG_STOP)
 from rtmidi.midiutil import open_midiinput
 
+class Tempo:
+    def __init__(self, bpm: int):
+        self.bpm = bpm
+        
+    def get_beat_duration(self) -> float:
+        return 60.0 / self.bpm
+    
+    def set_bpm(self, bpm: int):
+        self.bpm = bpm
+
+
 class MIDISyncDispatcher:
     def __init__(self, bpm=None):
         self.bpm = bpm if bpm is not None else 120.0
