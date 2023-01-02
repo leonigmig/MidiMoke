@@ -1,11 +1,11 @@
 import climax
 from collections import deque
+from midisync import Tempo
+
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
 import time
 
-def my_callback(arg1, arg2):
-  print(arg1, arg2)
 
 
 def run_sequencer(sequencer):
@@ -17,10 +17,11 @@ def run_sequencer(sequencer):
 def initialise_event_loop(interface_name):
     print(f"Configured to sync from {interface_name}")
 
-    looping_call = LoopingCall(run_sequencer, None)
-    looping_call.start(1.0)
+    tempo = Tempo(120)
 
-    reactor.callLater(5, my_callback, "Hello", "world")
+    looping_call = LoopingCall(run_sequencer, None)
+    looping_call.start(tempo.get_beat_duration())
+
     # Start the event loop
     reactor.run()
     

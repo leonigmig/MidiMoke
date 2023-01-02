@@ -1,6 +1,6 @@
 start: venv
 	. venv/bin/activate && \
-	python main.py OPZ
+	python src/main.py OPZ
 
 unit: venv
 	. venv/bin/activate && \
