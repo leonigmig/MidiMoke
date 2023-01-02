@@ -34,7 +34,7 @@ def initialise_event_loop(sync_interface, out_interface):
 
     track = MidiPlayer(out_interface)
 
-    tempo = Tempo(160)
+    tempo = Tempo(120)
 
     looper = Loop([60, 61, 60, 62], track)
 
