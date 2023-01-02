@@ -1,6 +1,7 @@
 from collections import deque
 import climax
 from midisync import Tempo
+from track import MidiPlayer
 
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
@@ -24,13 +25,20 @@ def run_sequencer(sequencer):
 
 
 @climax.command()
-@climax.argument('interface_name', help='the interface name to bind to')
-def initialise_event_loop(interface_name):
-    print(f"Configured to sync from {interface_name}")
+@climax.argument('sync_interface', help='the sync interface name to bind to')
+@climax.argument('out_interface', help='the out interface name to bind to')
+def initialise_event_loop(sync_interface, out_interface):
+    print(f"Configured for sync and control from {sync_interface}")
+    print(f"Configured to output to {out_interface}")
+
+    track = MidiPlayer(out_interface)
+    while (True):
+        track.play_note(60)
+    return
 
     tempo = Tempo(120)
 
-    looper = Loop(["C", "D", "C", "G"])
+    looper = Loop(["C4", "G4", "C5", "F5"])
 
     looping_call = LoopingCall(run_sequencer, looper)
     looping_call.start(tempo.get_beat_duration())
