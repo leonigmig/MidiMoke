@@ -1,5 +1,6 @@
 from collections import deque
 import climax
+from rich import print
 from midisync import Tempo
 from track import MidiPort, Voice
 
@@ -26,17 +27,17 @@ def run_sequencer(sequencer):
 
 
 @climax.command()
-@climax.argument('sync_interface', help='the sync interface name to bind to')
-@climax.argument('out_interface', help='the out interface name to bind to')
-def initialise_event_loop(sync_interface, out_interface):
-    print(f"Configured for sync and control from {sync_interface}")
-    print(f"Configured to output to {out_interface}")
-
-    out_port = MidiPort(out_interface)
-
-    voice = Voice(out_port)
+@climax.argument('sync_port', help='the sync port name to bind to')
+@climax.argument('out_port', help='the out port name to bind to')
+def initialise_event_loop(sync_port, out_port):
+    print("[italic blue]Running[/italic blue] 🦋✨")
+    print(f"Sync and control port: {sync_port}")
+    print(f"Output port: {out_port}")
 
     tempo = Tempo(120)
+    out_port = MidiPort(out_port)
+
+    voice = Voice(out_port)
 
     l1 = [60, 61, 60, 62, 72, 74, 73, 71]
     # l2 = [60, 61, 60, 62, 64, 62, 60, 61]
