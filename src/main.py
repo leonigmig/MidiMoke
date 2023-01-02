@@ -8,9 +8,10 @@ from twisted.internet.task import LoopingCall
 
 
 class Loop(object):
-    def __init__(self, data):
+    def __init__(self, data, track):
         self.data = data
         self.deque = deque(data)
+        self.track = track
 
     def get_next_event(self):
         try:
@@ -21,7 +22,7 @@ class Loop(object):
 
 
 def run_sequencer(sequencer):
-    print(sequencer.get_next_event())
+    sequencer.track.play_note(sequencer.get_next_event())
 
 
 @climax.command()
@@ -32,13 +33,10 @@ def initialise_event_loop(sync_interface, out_interface):
     print(f"Configured to output to {out_interface}")
 
     track = MidiPlayer(out_interface)
-    while (True):
-        track.play_note(60)
-    return
 
-    tempo = Tempo(120)
+    tempo = Tempo(160)
 
-    looper = Loop(["C4", "G4", "C5", "F5"])
+    looper = Loop([60, 61, 60, 62], track)
 
     looping_call = LoopingCall(run_sequencer, looper)
     looping_call.start(tempo.get_beat_duration())

@@ -5,7 +5,7 @@ from main import Loop
 
 class TestLoop(TestCase):
     def test_get_next_event(self):
-        loop = Loop(["C", "D", "C", "G"])
+        loop = Loop(["C", "D", "C", "G"], None)
         self.assertEqual(loop.get_next_event(), "C")
         self.assertEqual(loop.get_next_event(), "D")
         self.assertEqual(loop.get_next_event(), "C")
