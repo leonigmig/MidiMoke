@@ -1,14 +1,18 @@
 
-from rtmidi.midiconstants import (TIMING_CLOCK, SONG_CONTINUE, SONG_START, SONG_STOP)
+from collections import deque
+import time
+from rtmidi.midiconstants import (TIMING_CLOCK, SONG_CONTINUE, SONG_START,
+                                  SONG_STOP)
 from rtmidi.midiutil import open_midiinput
+
 
 class Tempo:
     def __init__(self, bpm: int):
         self.bpm = bpm
-        
+
     def get_beat_duration(self) -> float:
         return 60.0 / self.bpm
-    
+
     def set_bpm(self, bpm: int):
         self.bpm = bpm
 
@@ -45,6 +49,7 @@ class MIDISyncDispatcher:
         elif msg[0] == SONG_STOP:
             self.running = False
             print("STOP received.")
+
 
 def main():
     try:

@@ -2,7 +2,11 @@ start: venv
 	. venv/bin/activate && \
 	python src/main.py OPZ
 
-unit: venv
+lint:
+	. venv/bin/activate && \
+	flake8 src tests
+
+unit: venv lint
 	. venv/bin/activate && \
 	python -m unittest discover
 

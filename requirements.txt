@@ -1,3 +1,5 @@
 python-rtmidi
 Twisted
 climax
+flake8
+flake8-extensions

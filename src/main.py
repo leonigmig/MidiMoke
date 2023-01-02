@@ -1,11 +1,8 @@
 import climax
-from collections import deque
 from midisync import Tempo
 
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
-import time
-
 
 
 def run_sequencer(sequencer):
@@ -24,12 +21,7 @@ def initialise_event_loop(interface_name):
 
     # Start the event loop
     reactor.run()
-    
-
-
-
 
 
 if __name__ == '__main__':
     initialise_event_loop()
-
