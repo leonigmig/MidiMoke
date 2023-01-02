@@ -1,7 +1,7 @@
 from collections import deque
 import climax
 from midisync import Tempo
-from track import Voice
+from track import MidiPort, Voice
 
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
@@ -32,7 +32,9 @@ def initialise_event_loop(sync_interface, out_interface):
     print(f"Configured for sync and control from {sync_interface}")
     print(f"Configured to output to {out_interface}")
 
-    voice = Voice(out_interface)
+    out_port = MidiPort(out_interface)
+
+    voice = Voice(out_port)
 
     tempo = Tempo(120)
 

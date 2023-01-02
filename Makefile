@@ -15,5 +15,9 @@ venv:
 	. venv/bin/activate && \
 	pip install -r requirements.txt
 
+.PHONY: docs
+docs:
+	cd docs; make
+
 clean:
 	rm -rf venv

@@ -6,8 +6,8 @@ import alabaster
 
 # -- Project information -----------------------------------------------------
 
-project = 'reclaim'
-copyright = '2022, leonigmig'
+project = 'Butterfly'
+copyright = '2023, leonigmig'
 author = 'leonigmig'
 
 

@@ -1,4 +1,4 @@
-_Hinterman's Butterfly
+The Luminous Butterfly
 ======================
 
 A journey from millennial claustrophobia to open-ended cosmic consciousness. 
