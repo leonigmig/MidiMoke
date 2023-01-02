@@ -36,7 +36,10 @@ def initialise_event_loop(sync_interface, out_interface):
 
     tempo = Tempo(120)
 
-    looper = Loop([60, 61, 60, 62], track)
+    l1 = [60, 61, 60, 62, 72, 74, 73, 71]
+    # l2 = [60, 61, 60, 62, 64, 62, 60, 61]
+
+    looper = Loop(l1, track)
 
     looping_call = LoopingCall(run_sequencer, looper)
     looping_call.start(tempo.get_beat_duration())

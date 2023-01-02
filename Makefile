@@ -1,6 +1,6 @@
 start: venv
 	. venv/bin/activate && \
-	python src/main.py OP-Z OP-Z
+	python src/main.py 'IAC Driver Bus 1' OP-Z
 
 lint:
 	. venv/bin/activate && \

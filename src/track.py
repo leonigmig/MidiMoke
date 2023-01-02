@@ -5,25 +5,24 @@ from rtmidi.midiutil import open_midioutput
 import rtmidi.midiconstants as midi
 
 
+def midi_device_id_for(device_name):
+    ports = rtmidi.MidiOut().get_ports()
+    if device_name in ports:
+        return ports.index(device_name)
+    else:
+        return None
+
+
 class MidiPlayer:
-    """A simple MIDI player that plays a note on a specified device."""
 
     def __init__(self, device_name):
-        """Initialize the MIDI player and open the specified device."""
-
-        self.midiout = rtmidi.MidiOut()
-        available_ports = self.midiout.get_ports()
-        print(available_ports)
-
-        if device_name in available_ports:
-            port_id = available_ports.index(device_name)
-            try:
-                self.midiout, port_name = open_midioutput(port_id)
-            except (EOFError, KeyboardInterrupt):
-                sys.exit("failed to open MIDI output port")
+        """Initialize the specified MIDI device."""
+        try:
+            self.midiout, port_name = open_midioutput(
+                midi_device_id_for(device_name))
             print(f"Opened {device_name}")
-        else:
-            self.midiout.open_virtual_port(device_name)
+        except (EOFError, KeyboardInterrupt):
+            sys.exit("failed to open MIDI output port")
 
     def play_note(self, note):
         """Play a note for a specified duration."""
