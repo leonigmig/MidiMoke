@@ -1,5 +1,6 @@
 venv/
 .DS_Store
 docs/.venv/
+docs/html/
 __pycache__
 .vscode/

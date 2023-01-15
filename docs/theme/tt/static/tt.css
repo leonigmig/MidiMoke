@@ -212,6 +212,11 @@ input {
   font-style: italic;
 }
 
+.headerlink {
+  color: #020107;
+  font-size: smaller;
+}
+
 .admonition {
   border: 1px dotted #EEE;
   padding: 4px;
@@ -251,11 +256,6 @@ h2.author::after {
 }
 
 /* experimental, un toque rudo */
-
-.headerlink {
-  color: rgb(214, 214, 214);
-  font-size: smaller;
-}
 
 #searchbox {
   margin-top: 12px;
