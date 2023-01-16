@@ -16,18 +16,12 @@ def play_song(song_func, state, tick=0):
     play_song(song_func, new_state, tick + 1)
 
 
-def song2(pattern):
-    end_tick = float("inf")
-    tick = 0
+def make_movement(voice_1, voice_2, length=float("inf")):
+    def song_closure(tick):
+        if tick >= length:
+            return None, None
 
-    def song_closure():
-        nonlocal tick
-        if tick >= end_tick:
-            return None
-
-        current_note = pattern[tick % len(pattern)]
-        tick += 1
-        return current_note
+        return None, None
 
     return song_closure
 
