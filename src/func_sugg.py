@@ -16,6 +16,22 @@ def play_song(song_func, state, tick=0):
     play_song(song_func, new_state, tick + 1)
 
 
+def song2(pattern):
+    end_tick = float("inf")
+    tick = 0
+
+    def song_closure():
+        nonlocal tick
+        if tick >= end_tick:
+            return None
+
+        current_note = pattern[tick % len(pattern)]
+        tick += 1
+        return current_note
+
+    return song_closure
+
+
 def song(tick, state):
     """
     A recursive function that represents the song. It takes a current tick and
@@ -40,4 +56,4 @@ notes = [
 song_state = {"end_tick": 4, "notes": notes}
 
 # play the song
-play_song(song, song_state)
+# play_song(song, song_state)

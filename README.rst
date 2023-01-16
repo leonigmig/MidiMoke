@@ -3,4 +3,25 @@ Simple sequencer
 
 Just a simple event based sequencer
 
-lets say I want a function that acts as a player which takes a song as a parameter and is responsible for sending midi notes, keeping track of time and sleeping between notes in the song. the song knows which notes to play at any identified tick and is responsible for dynamically repeating, muting and varying the patterns according to a structure, pitch space and motive rhythm it takes as parameters. the patterns can be either pitch patterns or rhythm patterns. the whole structure is immutable. what pure python patterns can i use to compose this software
+- **Movement**: Overall collection of voices and polyphonic patterns, responsible for dynamically repeating, muting and varying the patterns according to a movement structure, pitch space, and motive rhythm it contains.
+    - **Form**: The overall structure of the movement, it defines how the movement repeats, mutates and varies the patterns in each voice
+        - **Pitch space**: The range of pitches used in the movement
+        - **Motive rhythm**: The rhythm of the movement
+    - **Voice**: For example, rhythm, bassline, arpeggiated line, evolving pad, acid line, lead melody etc.
+    - **Pattern**: Polyphonic sequence of notes that make up a melody, harmony or rhythm through time
+        - **Note**: Single pitch and duration represented in a movement
+            - Pitch: The high or low quality of a musical sound
+            - Duration: The length of time a musical note is held for (in ticks)
+
+- **Player**: The traversal of a movement to produce music. Responsible for sending the notes and keeping track of how many ticks to sleep in between.
+    - **MIDI Port**: The port used to send the notes to the synthesizers
+    - **Ticks**: The unit of time used to measure duration in a movement
+    - **Wait**: The amount of time the player pauses between emitting notes, when traversing the movement.
+
+Note: The whole structure is immutable, it means the structure once defined cannot be changed.
+
+
+
+
+
+   
