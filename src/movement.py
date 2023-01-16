@@ -2,6 +2,21 @@ import time
 # from functools import partial, reduce
 
 
+def make_movement(pattern_1, pattern_2, length=float("inf")):
+    def movement(tick):
+        nonlocal pattern_1, pattern_2, length
+        if tick >= length:
+            return None, None
+
+        notes = [
+            pattern_1[tick-1], pattern_2[tick-1]
+        ]
+
+        return notes, 1
+
+    return movement
+
+
 def play_song(song_func, state, tick=0):
     """
     A higher-order function that plays the song by calling the song_func with
@@ -14,16 +29,6 @@ def play_song(song_func, state, tick=0):
     print("Playing note:", note)
     time.sleep(note["duration"])
     play_song(song_func, new_state, tick + 1)
-
-
-def make_movement(voice_1, voice_2, length=float("inf")):
-    def song_closure(tick):
-        if tick >= length:
-            return None, None
-
-        return 1, 1
-
-    return song_closure
 
 
 def song(tick, state):

@@ -1,5 +1,5 @@
 import unittest
-from func_sugg import make_movement
+from movement import make_movement
 
 
 class TestMovementFunction(unittest.TestCase):
@@ -21,18 +21,23 @@ class TestMovementFunction(unittest.TestCase):
         # essentially monophonic pattern per voice to start
         length = 2
         pattern_1 = [
-            {"pitch": 60, "duration": 0.5},
-            {"pitch": 67, "duration": 0.5}
+            {"note": True, "pitch": 60, "tick": 1},
+            {"note": False, "pitch": 60, "tick": 2},
         ]
         pattern_2 = [
-            {"pitch": 64, "duration": 0.5},
-            {"pitch": 62, "duration": 0.5}
+            {"note": True, "pitch": 64, "tick": 1},
+            {"note": False, "pitch": 64, "tick": 2},
         ]
 
         # when
         movement = make_movement(pattern_1, pattern_2, length)
+        notes, tick_delta = movement(1)
 
         # then
-        notes, tick_delta = movement(1)
-        assert (notes is not None)
-        assert (tick_delta is not None)
+        self.assertIsNotNone(notes)
+        self.assertEqual(type(notes), list)
+        self.assertEqual(notes[0], {"note": True, "pitch": 60, "tick": 1})
+        self.assertEqual(notes[1], {"note": True, "pitch": 64, "tick": 1})
+        self.assertIsNotNone(tick_delta)
+        self.assertEqual(type(tick_delta), int)
+        self.assertEqual(tick_delta, 1)
