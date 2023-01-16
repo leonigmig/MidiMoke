@@ -8,7 +8,12 @@ Player
 
 ..  code-block:: Python
 
-    notes, ticks_to_wait = play(movement, midi_port)
+    def play(movement, current_tick=0):
+        notes, tick_delta = movement(current_tick)
+        for note in notes:
+            send_note(note)
+        sleep(tick_delta)
+        play(movement, current_tick + tick_delta)
 
 - **Player**: The traversal of a movement to produce music. Responsible for sending the notes and keeping track of how many ticks to sleep in between.
     - **MIDI Port**: The port used to send the notes to the synthesizers
