@@ -8,7 +8,7 @@ lint:
 
 unit: venv lint
 	. venv/bin/activate && \
-	python -m unittest discover
+	python -m unittest discover -b
 
 venv:
 	python3 -m venv venv

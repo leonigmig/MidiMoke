@@ -5,7 +5,7 @@ import time
 def make_movement(pattern_1, pattern_2, length=float("inf")):
     def movement(tick):
         nonlocal pattern_1, pattern_2, length
-        if tick >= length:
+        if tick > length:
             return None, None
 
         notes = [
