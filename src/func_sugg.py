@@ -21,7 +21,7 @@ def make_movement(voice_1, voice_2, length=float("inf")):
         if tick >= length:
             return None, None
 
-        return None, None
+        return 1, 1
 
     return song_closure
 
