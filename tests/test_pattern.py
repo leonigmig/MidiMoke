@@ -15,7 +15,7 @@ class TestPattern(unittest.TestCase):
     def test_1_tick_length_pattern(self):
         # when
         pattern = Pattern()
-        pattern.addNoteByNumber(pitch=60, tick=1, duration=1, volume=100)
+        pattern.addNote(pitch=60, tick=1, duration=1, volume=100)
         pattern.processEventList()
 
         # then

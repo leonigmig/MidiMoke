@@ -25,13 +25,13 @@ class TestMovementFunction(unittest.TestCase):
 
         pattern_1 = Pattern()
         # time and duration are in beats
-        pattern_1.addNoteByNumber(
+        pattern_1.addNote(
             pitch=60, tick=1, duration=1, volume=100)
-        pattern_1.addNoteByNumber(
+        pattern_1.addNote(
             pitch=60, tick=2, duration=1, volume=100)
-        pattern_1.addNoteByNumber(
+        pattern_1.addNote(
             pitch=64, tick=1, duration=1, volume=100)
-        pattern_1.addNoteByNumber(
+        pattern_1.addNote(
             pitch=64, tick=2, duration=1, volume=100)
 
         # when

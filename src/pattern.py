@@ -76,37 +76,6 @@ def sort_events(event):
     return (event.tick, event.sec_sort_order, event.insertion_order)
 
 
-def writeVarLength(i):
-    '''
-    Accept an integer, and serialize it as a MIDI file variable length quantity
-    Some numbers in MTrk chunks are represented in a form called a variable-
-    length quantity.  These numbers are represented in a sequence of bytes,
-    each byte holding seven bits of the number, and ordered most significant
-    bits first. All bytes in the sequence except the last have bit 7 set,
-    and the last byte has bit 7 clear.  This form allows smaller numbers to
-    be stored in fewer bytes.  For example, if the number is between 0 and
-    127, it is thus represented exactly as one byte.  A number between 128
-    and 16383 uses two bytes, and so on.
-    Examples:
-    Number  VLQ
-    128     81 00
-    8192    C0 00
-    16383   FF 7F
-    16384   81 80 00
-    '''
-    if i == 0:
-        return [0]
-
-    vlbytes = []
-    hibit = 0x00  # low-order byte has high bit cleared.
-    while i > 0:
-        vlbytes.append(((i & 0x7f) | hibit) & 0xff)
-        i >>= 7
-        hibit = 0x80
-    vlbytes.reverse()  # most-significant byte first, least significant last
-    return vlbytes
-
-
 class Pattern():
     def __init__(self):
         '''Initialize the MIDITrack object.
@@ -117,8 +86,8 @@ class Pattern():
         self.eventList = []
         self.MIDIEventList = []
 
-    def addNoteByNumber(self, pitch, tick, duration, volume,
-                        annotation=None, insertion_order=0):
+    def addNote(self, pitch, tick, duration, volume,
+                annotation=None, insertion_order=0):
         '''
         Add a note by chromatic MIDI number
         '''
@@ -195,21 +164,6 @@ class NoteOn(GenericEvent):
         return 'NoteOn %d at tick %d duration %d ch %d vel %d' % (
             self.pitch, self.tick, self.duration, self.channel, self.volume)
 
-    def serialize(self, previous_event_tick):
-        """Return a bytestring representation of the event, in the format
-         required for
-        writing into a standard midi file.
-        """
-        midibytes = b""
-        code = self.midi_status | self.channel
-        varTime = writeVarLength(self.tick - previous_event_tick)
-        for timeByte in varTime:
-            midibytes += struct.pack('>B', timeByte)
-        midibytes += struct.pack('>B', code)
-        midibytes += struct.pack('>B', self.pitch)
-        midibytes += struct.pack('>B', self.volume)
-        return midibytes
-
 
 class NoteOff (GenericEvent):
     '''
@@ -240,18 +194,3 @@ class NoteOff (GenericEvent):
     def __str__(self):
         return 'NoteOff %d at tick %d ch %d vel %d' % (
             self.pitch, self.tick, self.channel, self.volume)
-
-    def serialize(self, previous_event_tick):
-        """Return a bytestring representation of the event, in the format
-         required for
-        writing into a standard midi file.
-        """
-        midibytes = b""
-        code = self.midi_status | self.channel
-        varTime = writeVarLength(self.tick - previous_event_tick)
-        for timeByte in varTime:
-            midibytes += struct.pack('>B', timeByte)
-        midibytes += struct.pack('>B', code)
-        midibytes += struct.pack('>B', self.pitch)
-        midibytes += struct.pack('>B', self.volume)
-        return midibytes
