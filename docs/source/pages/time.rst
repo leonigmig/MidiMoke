@@ -5,11 +5,12 @@ Time
 
 2/ The cells and tissues of the brain have evolved to a structure and organization that regulates complex behaviors and that is why the world is the way it is right now.
 
-3/ The brain's perception of time is determined by sensory input and the cycle of the "brain" around the  mind, the body, the spirit and the soul.
+3/ The brain's perception of time is determined by sensory input and the :ref:`Four Looping Pathways` of the "brain" around the  mind, the body, the spirit and the soul.
 
-:ref:`Four Quadrants`
+
 
 .. toctree::
-   :maxdepth: 2
+    :hidden:
+    :maxdepth: 2
 
-   four-quadrants.rst
+    four-quadrants.rst
