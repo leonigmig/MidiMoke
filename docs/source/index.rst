@@ -1,5 +1,5 @@
-The Luminous Butterfly
-======================
+Two shadows and the luminous butterfly
+======================================
 
 A journey from millennial claustrophobia to open-ended cosmic consciousness. 
 
@@ -10,3 +10,4 @@ A journey from millennial claustrophobia to open-ended cosmic consciousness.
    :caption: Starting points:
 
    ./pages/time.rst
+   

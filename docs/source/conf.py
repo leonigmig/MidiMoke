@@ -16,7 +16,8 @@ author = 'leonigmig'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 'sphinxcontrib.youtube']
+extensions = ['sphinxcontrib.youtube',
+              'sphinx.ext.autosectionlabel']
 
 
 # Add any paths that contain templates here, relative to this directory.
@@ -36,7 +37,7 @@ exclude_patterns = []
 html_theme = 'tt'
 html_theme_path = ['../theme/']
 html_theme_options = {
-    'show_powered_by' : False
+    'show_powered_by': False
 }
 
 html_show_sourcelink = False
