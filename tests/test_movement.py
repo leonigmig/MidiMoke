@@ -41,13 +41,21 @@ class TestMovementFunction(unittest.TestCase):
         # then
         self.assertIsNotNone(notes)
         self.assertEqual(type(notes), list)
-        print(notes[0])
+        self.assertEqual(len(notes), 2)
         self.assertEqual(notes[0], NoteOn(1, 64, 1, 1, 100))
+        self.assertEqual(notes[1], NoteOn(1, 60, 1, 1, 100))
         self.assertIsNotNone(tick_delta)
         self.assertEqual(type(tick_delta), int)
         self.assertEqual(tick_delta, 1)
 
         # and when
         notes, tick_delta = movement(2)
+        self.assertEqual(len(notes), 4)
+        self.assertIsNotNone(notes)
+        self.assertEqual(type(notes), list)
+
+        # and when
+        notes, tick_delta = movement(3)
+        self.assertEqual(len(notes), 2)
         self.assertIsNotNone(notes)
         self.assertEqual(type(notes), list)
