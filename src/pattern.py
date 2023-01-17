@@ -117,11 +117,14 @@ class Pattern():
         self.eventList = []
         self.MIDIEventList = []
 
-    def addNoteByNumber(self, channel, pitch, tick, duration, volume,
+    def addNoteByNumber(self, pitch, tick, duration, volume,
                         annotation=None, insertion_order=0):
         '''
         Add a note by chromatic MIDI number
         '''
+        # hardcode this to channel 1 as we don't have a channel parameter
+        channel = 1
+
         self.eventList.append(NoteOn(channel, pitch, tick, duration, volume,
                                      annotation=annotation,
                                      insertion_order=insertion_order))
