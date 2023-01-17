@@ -8,10 +8,11 @@ def make_movement(pattern_1, pattern_2, length=float("inf")):
         if tick > length:
             return None, None
 
-        notes = [
-            pattern_1[tick-1], pattern_2[tick-1]
-        ]
-
+        pattern_1.processEventList()
+        notes = []
+        for item in pattern_1.MIDIEventList:
+            if item.tick == tick:
+                notes.append(item)
         return notes, 1
 
     return movement

@@ -50,3 +50,7 @@ Ticks are the fundamental unit of time used to measure duration in a movement.
 - **Tick delta**: The amount of ticks that the player should wait until the next note or set of notes in the movement needs to be emitted
 
    
+Acknowledgements
+----------------
+
+Acknowledge use of sections of code from MidiUtil wrapping MIDI notes and converting notes to lists of events

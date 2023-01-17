@@ -27,9 +27,7 @@ The whole thing can synchronise, which connects to compulsive rhythm seeking and
 
 Many of the concepts and constructs can be related to storytelling and narrative.
 
-- Stories often revolve around characters who have a goal or desire that drives the plot forward.
-
-- Stories often include elements of reward and punishment, such as the protagonist achieving their goal or facing consequences for their actions.
+- Stories often revolve around characters who have a goal or desire that drives the plot forward. Stories often include elements of reward and punishment, such as the protagonist achieving their goal or facing consequences for their actions.
 
 - Melody and harmony can create expectations in the listener by setting up a particular musical phrase or chord progression. The resolution of these expectations can create feelings of reward, while the lack of resolution can create feelings of punishment.
 

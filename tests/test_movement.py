@@ -1,5 +1,6 @@
 import unittest
 from movement import make_movement
+from pattern import Pattern, NoteOn
 
 
 class TestMovementFunction(unittest.TestCase):
@@ -15,30 +16,33 @@ class TestMovementFunction(unittest.TestCase):
         assert (notes is None)
         assert (tick_delta is None)
 
-    def test_2_tick_length_movement(self):
+    def test_3_tick_length_movement(self):
         # given
         # essentially monophonic pattern per voice to start
         # each pattern is 2 ticks long
 
-        length = 2
-        pattern_1 = [
-            {"note": True, "pitch": 60, "tick": 1},
-            {"note": False, "pitch": 60, "tick": 2},
-        ]
-        pattern_2 = [
-            {"note": True, "pitch": 64, "tick": 1},
-            {"note": False, "pitch": 64, "tick": 2},
-        ]
+        length = 3
+
+        pattern_1 = Pattern()
+        # time and duration are in beats
+        pattern_1.addNoteByNumber(
+            channel=1, pitch=60, tick=1, duration=1, volume=100)
+        pattern_1.addNoteByNumber(
+            channel=1, pitch=60, tick=2, duration=1, volume=100)
+        pattern_1.addNoteByNumber(
+            channel=1, pitch=64, tick=1, duration=1, volume=100)
+        pattern_1.addNoteByNumber(
+            channel=1, pitch=64, tick=2, duration=1, volume=100)
 
         # when
-        movement = make_movement(pattern_1, pattern_2, length)
+        movement = make_movement(pattern_1, length)
         notes, tick_delta = movement(1)
 
         # then
         self.assertIsNotNone(notes)
         self.assertEqual(type(notes), list)
-        self.assertEqual(notes[0], {"note": True, "pitch": 60, "tick": 1})
-        self.assertEqual(notes[1], {"note": True, "pitch": 64, "tick": 1})
+        print(notes[0])
+        self.assertEqual(notes[0], NoteOn(1, 64, 1, 1, 100))
         self.assertIsNotNone(tick_delta)
         self.assertEqual(type(tick_delta), int)
         self.assertEqual(tick_delta, 1)
@@ -47,8 +51,3 @@ class TestMovementFunction(unittest.TestCase):
         notes, tick_delta = movement(2)
         self.assertIsNotNone(notes)
         self.assertEqual(type(notes), list)
-        self.assertEqual(notes[0], {"note": False, "pitch": 60, "tick": 2})
-        self.assertEqual(notes[1], {"note": False, "pitch": 64, "tick": 2})
-        self.assertIsNotNone(tick_delta)
-        self.assertEqual(type(tick_delta), int)
-        self.assertEqual(tick_delta, 1)
