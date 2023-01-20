@@ -1,7 +1,8 @@
 import sys
-import time
 import rtmidi
 import rtmidi.midiconstants as midi
+
+from pattern import NoteOff, NoteOn
 
 midiout = rtmidi.MidiOut()
 
@@ -29,15 +30,14 @@ class MidiPort:
     def send_message(self, message):
         self.midiout.send_message(message)
 
-    def note_on(self, note):
-        print(f"Note on: {note}")
-        self.midiout.send_message([midi.NOTE_ON, 62, 100])
+    def note_on(self, pitch):
+        self.midiout.send_message([midi.NOTE_ON, pitch, 100])
 
-    def note_off(self, note):
-        print(f"Note off: {note}")
-        self.midiout.send_message([midi.NOTE_OFF, 62, 0])
+    def note_off(self, pitch):
+        self.midiout.send_message([midi.NOTE_OFF, pitch, 0])
 
-    def play_note(self, note):
-        self.note_on(note)
-        time.sleep(0.5)
-        self.note_off(note)
+    def send_event(self, event):
+        if isinstance(event, NoteOn):
+            self.note_on(event.pitch)
+        elif isinstance(event, NoteOff):
+            self.note_off(event.pitch)

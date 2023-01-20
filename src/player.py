@@ -14,7 +14,7 @@ class Player():
         notes, delta = self.movement(tick)
         print(f"Tick: {tick} - Notes: {notes} - Delta: {delta}")
         for note in notes:
-            self.port.play_note(note)
+            self.port.send_event(note)
         self.sleep(delta)
         self.play(tick + delta)
 

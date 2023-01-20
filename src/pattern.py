@@ -76,13 +76,14 @@ def sort_events(event):
 
 
 class Pattern():
-    def __init__(self):
+    def __init__(self, tick_length=4):
         '''Initialize the MIDITrack object.
         '''
         self.dataLength = 0  # Is calculated after the data is in place
         self.MIDIdata = b""
         self.eventList = []
         self.MIDIEventList = []
+        self.tick_length = tick_length
 
     def addNote(self, pitch, tick, duration, volume,
                 annotation=None, insertion_order=0):

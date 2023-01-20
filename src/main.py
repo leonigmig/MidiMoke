@@ -11,7 +11,6 @@ from rich import print
 @climax.command()
 @climax.argument('sync_port', help='the sync port name to bind to')
 @climax.argument('out_port', help='the out port name to bind to')
-@climax.argument('out_port', help='verbose mode')
 def initialise_event_loop(sync_port, out_port):
     print("[italic blue]Running[/italic blue] 🦋✨")
     print(f"Sync and control port: {sync_port}")
