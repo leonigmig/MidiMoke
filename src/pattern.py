@@ -1,4 +1,3 @@
-import struct
 
 
 class GenericEvent(object):
@@ -80,7 +79,6 @@ class Pattern():
     def __init__(self):
         '''Initialize the MIDITrack object.
         '''
-        self.headerString = struct.pack('cccc', b'M', b'T', b'r', b'k')
         self.dataLength = 0  # Is calculated after the data is in place
         self.MIDIdata = b""
         self.eventList = []
@@ -139,7 +137,6 @@ class NoteOn(GenericEvent):
     A class that encapsulates a note
     '''
     evtname = 'NoteOn'
-    midi_status = 0x90    # 0x9x is Note On
     sec_sort_order = 3
 
     def __init__(self, channel, pitch, tick, duration, volume,
@@ -170,7 +167,6 @@ class NoteOff (GenericEvent):
     A class that encapsulates a Note Off event
     '''
     evtname = 'NoteOff'
-    midi_status = 0x80  # 0x8x is Note Off
     sec_sort_order = 2  # must be less than that of NoteOn
     # If two events happen at the same time, the secondary sort key is
     # ``sec_sort_order``. Thus a class of events can be processed earlier than

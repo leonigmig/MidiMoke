@@ -1,5 +1,5 @@
 import unittest
-from pattern import Pattern
+from pattern import Pattern, NoteOn
 
 
 class TestPattern(unittest.TestCase):
@@ -22,3 +22,11 @@ class TestPattern(unittest.TestCase):
         self.assertIsNotNone(pattern)
         self.assertEqual(type(pattern), Pattern)
         self.assertEqual(len(pattern.MIDIEventList), 2)
+
+    def test_hashfunction_doesnt_work_as_expected(self):
+        # when
+        noteA = NoteOn(1, 60, 1, 1, 100)
+        noteB = NoteOn(1, 64, 1, 1, 100)
+
+        # then
+        self.assertEqual(hash(noteA), hash(noteB))

@@ -1,34 +1,31 @@
-from collections import deque
+import time
 import climax
 from rich import print
 from midisync import Tempo
-from track import MidiPort, Voice
-
-from twisted.internet import reactor
-from twisted.internet.task import LoopingCall
-
-
-class Loop(object):
-    def __init__(self, data, track):
-        self.data = data
-        self.deque = deque(data)
-        self.track = track
-
-    def get_next_event(self):
-        try:
-            return self.deque.popleft()
-        except IndexError:
-            self.deque = deque(self.data)
-            return self.get_next_event()
+from movement import make_movement
+from pattern import Pattern
+from track import MidiPort
 
 
-def run_sequencer(sequencer):
-    sequencer.track.play_note(sequencer.get_next_event())
+class Player():
+    def __init__(self, tempo, movement, port):
+        self.tempo = tempo
+        self.movement = movement
+        self.port = port
+
+    def play(self):
+        tick = 0
+        while True:
+            notes, delta = self.movement(tick)
+            for note in notes:
+                self.port.play_note(note)
+            tick += delta
+            time.sleep(self.tempo.get_beat_duration() * delta)
 
 
-@climax.command()
-@climax.argument('sync_port', help='the sync port name to bind to')
-@climax.argument('out_port', help='the out port name to bind to')
+@ climax.command()
+@ climax.argument('sync_port', help='the sync port name to bind to')
+@ climax.argument('out_port', help='the out port name to bind to')
 def initialise_event_loop(sync_port, out_port):
     print("[italic blue]Running[/italic blue] 🦋✨")
     print(f"Sync and control port: {sync_port}")
@@ -37,18 +34,22 @@ def initialise_event_loop(sync_port, out_port):
     tempo = Tempo(120)
     out_port = MidiPort(out_port)
 
-    voice = Voice(out_port)
+    pattern_1 = Pattern()
+    # time and duration are in beats
+    pattern_1.addNote(
+        pitch=60, tick=1, duration=1, volume=100)
+    pattern_1.addNote(
+        pitch=60, tick=2, duration=1, volume=100)
+    pattern_1.addNote(
+        pitch=64, tick=1, duration=1, volume=100)
+    pattern_1.addNote(
+        pitch=64, tick=2, duration=1, volume=100)
 
-    l1 = [60, 61, 60, 62, 72, 74, 73, 71]
-    # l2 = [60, 61, 60, 62, 64, 62, 60, 61]
+    movement = make_movement(pattern_1, 3)
 
-    looper = Loop(l1, voice)
+    player = Player(tempo, movement, out_port)
 
-    looping_call = LoopingCall(run_sequencer, looper)
-    looping_call.start(tempo.get_beat_duration())
-
-    # Start the event loop
-    reactor.run()
+    player.play()
 
 
 if __name__ == '__main__':
