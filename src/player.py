@@ -10,7 +10,7 @@ class Player():
         self.movement = movement
         self.port = port
 
-    def play(self, tick):
+    def play(self, tick=0):
         notes, delta = self.movement(tick)
         print(f"Tick: {tick} - Notes: {notes} - Delta: {delta}")
         for note in notes:

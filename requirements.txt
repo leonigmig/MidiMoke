@@ -1,6 +1,4 @@
 python-rtmidi
-Twisted
 climax
 flake8
-mido
 rich
