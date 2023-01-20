@@ -1,11 +1,11 @@
 Time
 ----
 
-1/ If time were to move backwards, it would fundamentally alter the way in which the universe works and the way in which matter and energy behave (which is  observed not to be the case).
+Time is the most fundamental thing. If it were to move backwards, it would fundamentally alter the way in which the universe works and the way in which matter and energy behave (which is  observed not to be the case).
 
-2/ The cells and tissues of the brain have evolved to a structure and organization that regulates complex behaviors and that is why the world is the way it is right now.
+That is because cells and tissues of the brain have evolved in time to a structure and organization that regulates our. complex behavior. And these complex behaviors are why the world is why the world is the way it is right now. The brain's perception of time is determined by sensory input and the :ref:`Four Looping Pathways` of the "brain" around the  mind, the body, the spirit and the soul.
 
-3/ The brain's perception of time is determined by sensory input and the :ref:`Four Looping Pathways` of the "brain" around the  mind, the body, the spirit and the soul.
+This is implemented by the :ref:`Software`
 
 
 
@@ -14,3 +14,4 @@ Time
     :maxdepth: 2
 
     four-quadrants.rst
+    software.rst
