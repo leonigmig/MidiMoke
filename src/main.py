@@ -1,16 +1,18 @@
 import sys
 
 from rich import print
-import climax
+import climax as shell
 
 from midisync import Tempo
 from movement import make_movement
-from pattern import Pattern
 from midiport import MidiPort
+from pattern import Pattern
 from player import Player
 
 
 def make_test_pattern():
+    """Or demo pattern.
+    """
     pattern = Pattern()
     pattern.addNote(
         pitch=60, tick=1, duration=1, volume=100)
@@ -26,7 +28,8 @@ def make_test_pattern():
 
 
 def play_at_this_speed_to_this_midibus(bpm, out):
-    """Core time loop for playing a movement."""
+    """Core time loop for playing a movement.
+    """
 
     sys.setrecursionlimit(2000)
 
@@ -45,12 +48,13 @@ def play_at_this_speed_to_this_midibus(bpm, out):
         print("That's enough of that!")
 
 
-@climax.command()
-@climax.argument('midi_in', help='transport, sync, event midi port to bind to')
-@climax.argument('midi_out', help='primary midi output bus for notes, events')
+@shell.command()
+@shell.argument('midi_in', help='transport, sync, event midi port to bind to')
+@shell.argument('midi_out', help='primary midi output bus for notes, events')
 def initialise_event_loop(midi_in, midi_out):
     """Connect to MIDI, prepare access to device hardware clock,
-    load movement and app settings from configuration then play."""
+    load movement and app settings from configuration then play.
+    """
 
     print("[italic blue]Blue Butterly alphav0.1[/italic blue] 🦋✨")
 
