@@ -1,6 +1,9 @@
 
 
 import time
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class Player():
@@ -12,7 +15,7 @@ class Player():
 
     def play(self, tick=0):
         notes, delta = self.movement(tick)
-        print(f"Tick: {tick} - Notes: {notes} - Delta: {delta}")
+        log.info(f"Tick: {tick} - Notes: {notes} - Delta: {delta}")
         for note in notes:
             self.port.send_event(note)
         self.sleep(delta)

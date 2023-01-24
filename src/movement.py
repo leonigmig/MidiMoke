@@ -1,14 +1,24 @@
 # from functools import partial, reduce
 
+import logging
+
+log = logging.getLogger(__name__)
+
 
 def make_movement(pattern_1, pattern_2, length=float("inf")):
+    """Returns a function that takes a tick and returns a list of events
+    to play
+    """
     def movement(tick):
+        """Returns a list of events to play at a given tick
+        """
         nonlocal pattern_1, pattern_2, length
+
         if tick > length:
             return None, None
 
         loop_tick = tick % pattern_1.tick_length
-        print(loop_tick)
+        log.info(loop_tick)
         pattern_1.processEventList()
         notes = []
         for item in pattern_1.MIDIEventList:

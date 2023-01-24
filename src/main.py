@@ -1,7 +1,8 @@
 import sys
 
-from rich import print
+from rich.logging import RichHandler
 import climax as shell
+import logging
 
 from midisync import Tempo
 from movement import make_movement
@@ -44,8 +45,19 @@ def play_at_this_speed_to_this_midibus(bpm, out):
         player.play(0)
 
     except RecursionError as e:
-        print(e)
-        print("That's enough of that!")
+        log(e)
+        log("That's enough of that!")
+
+
+def init_logging():
+    FORMAT = "%(message)s"
+    logging.basicConfig(
+        level="NOTSET", format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+    )
+    return logging.getLogger(__name__)
+
+
+log = init_logging()
 
 
 @shell.command()
@@ -56,7 +68,7 @@ def initialise_event_loop(midi_in, midi_out):
     load movement and app settings from configuration then play.
     """
 
-    print("[italic blue]Blue Butterly alphav0.1[/italic blue] 🦋✨")
+    log.info("🦋 [italic blue]✨🦋 Blue Butterfly alphav0.1[/italic blue] 🦋")
 
     bpm = Tempo(120)
     out = MidiPort(midi_out)
