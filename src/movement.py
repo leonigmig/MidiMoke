@@ -18,12 +18,15 @@ def make_movement(pattern_1, pattern_2, length=float("inf")):
             return None, None
 
         loop_tick = tick % pattern_1.tick_length
-        log.info(loop_tick)
         pattern_1.processEventList()
         notes = []
         for item in pattern_1.MIDIEventList:
             if item.tick == loop_tick:
                 notes.append(item)
-        return notes, 1
+
+        duration = 1
+        log.info("loop tick: %d, played tick: %d, duration: %d",
+                 loop_tick, tick, duration)
+        return notes, duration
 
     return movement

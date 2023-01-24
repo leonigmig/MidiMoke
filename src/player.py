@@ -15,7 +15,6 @@ class Player():
 
     def play(self, tick=0):
         notes, delta = self.movement(tick)
-        log.info(f"Tick: {tick} - Notes: {notes} - Delta: {delta}")
         for note in notes:
             self.port.send_event(note)
         self.sleep(delta)

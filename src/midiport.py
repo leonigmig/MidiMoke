@@ -1,8 +1,12 @@
 import sys
+import logging
 import rtmidi
 import rtmidi.midiconstants as midi
 
 from pattern import NoteOff, NoteOn
+
+
+log = logging.getLogger(__name__)
 
 midiout = rtmidi.MidiOut()
 
@@ -23,7 +27,7 @@ class MidiPort:
             try:
                 self.midiout = midiout.open_port(
                     midi_device_id_for(device_name))
-                print(f"Opened {device_name}")
+                log.info(f"Opened {device_name}")
             except (EOFError, KeyboardInterrupt):
                 sys.exit("failed to open MIDI output port")
 
