@@ -42,7 +42,7 @@ def play_at_this_speed_to_this_midibus(bpm, out):
             out
         )
 
-        player.play(0)
+        player.start(0)
 
     except RecursionError as e:
         log(e)
