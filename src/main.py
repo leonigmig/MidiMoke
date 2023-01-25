@@ -68,7 +68,7 @@ def initialise_event_loop(midi_in, midi_out):
     load movement and app settings from configuration then play.
     """
 
-    log.info("✨🦋 Blue Butterfly alphav0.1 🦋")
+    log.info("✨🦋 MIDI Moke alphav0.1 🦋")
 
     bpm = Tempo(120)
     out = MidiPort(midi_out)

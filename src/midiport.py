@@ -27,7 +27,7 @@ class MidiPort:
             try:
                 self.midiout = midiout.open_port(
                     midi_device_id_for(device_name))
-                log.info(f"Opened {device_name}")
+                log.info(f"Opened {device_name} for MIDI output")
             except (EOFError, KeyboardInterrupt):
                 sys.exit("failed to open MIDI output port")
 
