@@ -17,7 +17,7 @@ class Player():
         self.open_midi_input(self.port)
 
     def start(self, tick=0):
-        self.play = True
+        self.play = False
 
         self.loop = asyncio.get_event_loop()
         self.loop.run_forever()
@@ -39,7 +39,7 @@ class Player():
 
     async def play_task(self, tick=0):
         log.info("in play task")
-        while True:
+        while self.play:
             log.info(self.play)
             notes, delta = self.movement(tick)
             for note in notes:
