@@ -22,25 +22,8 @@ class Player():
         self.loop = asyncio.get_event_loop()
         self.loop.run_forever()
 
-        asyncio.run(self.main())
-
-    async def main(self):
-        self.cf = asyncio.create_task(self.console_loop())
-        await asyncio.sleep(50)
-
-    async def console_loop(self):
-        try:
-            log.info("This is the main loop")
-            while True:
-                await asyncio.sleep(1)
-                log.info("tick")
-        except KeyboardInterrupt:
-            log.info("Exiting")
-
     async def play_task(self, tick=0):
-        log.info("in play task")
         while self.play:
-            log.info(self.play)
             notes, delta = self.movement(tick)
             for note in notes:
                 self.port.send_event(note)
@@ -51,14 +34,11 @@ class Player():
     def handle_midi_input(self, message, timestamp):
         msg, time_stamp = message
         log.debug(f"Received MIDI message: {msg} at {timestamp}")
-        log.debug(SONG_START)
-        log.debug(msg[0])
         if msg[0] in (SONG_START, SONG_CONTINUE):
             log.debug("Starting player")
             self.play = True
             self.loop.call_soon_threadsafe(asyncio.create_task,
                                            self.play_task(0))
-            log.debug("call soon threadsafe has been called")
         elif msg[0] is SONG_STOP:
             log.debug("stop that song")
             self.play = False
