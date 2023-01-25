@@ -1,5 +1,5 @@
 import unittest
-from midisync import Tempo
+from player import Tempo
 
 
 class TestTempo(unittest.TestCase):

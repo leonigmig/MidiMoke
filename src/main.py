@@ -4,11 +4,10 @@ from rich.logging import RichHandler
 import climax as shell
 import logging
 
-from midisync import Tempo
 from movement import make_movement
 from midiport import MidiPort
 from pattern import Pattern
-from player import Player
+from player import Player, Tempo
 
 
 def make_test_pattern():
@@ -68,7 +67,7 @@ def initialise_event_loop(midi_in, midi_out):
     load movement and app settings from configuration then play.
     """
 
-    log.info("✨🦋 MIDI Moke alphav0.1 🦋")
+    log.info("✨🦋 MIDI Moke alphav0.1 🦋✨")
 
     bpm = Tempo(120)
     out = MidiPort(midi_out)
