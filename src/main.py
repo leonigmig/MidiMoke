@@ -15,7 +15,7 @@ def make_test_pattern():
     """
     pattern = Pattern()
     pattern.addNote(
-        pitch=60, tick=1, duration=1, volume=100)
+        pitch=60, tick=0, duration=1, volume=100)
     pattern.addNote(
         pitch=60, tick=2, duration=1, volume=100)
     pattern.addNote(
