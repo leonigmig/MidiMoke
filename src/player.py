@@ -43,8 +43,9 @@ class Player():
         log.info("Player stopped")
 
     def handle_midi_input(self, message, timestamp):
-        msg, time_stamp = message
-        log.debug(f"Received MIDI message: {msg} at {timestamp}")
+        msg, timestamp = message
+        if msg[0] is not TIMING_CLOCK:
+            log.debug(f"Received MIDI message: {msg} at {timestamp}")
         if msg[0] in (SONG_START, SONG_CONTINUE):
             log.debug("Starting player")
             self.play = True
@@ -54,11 +55,15 @@ class Player():
             log.debug("stop that song")
             self.play = False
         elif msg[0] is TIMING_CLOCK:
-            log.debug("Timing clock")
+            self.counter += 1
+            if self.counter % 24 == 0:
+                log.debug("Beat from the T clock")
 
     def open_midi_input(self, port):
         try:
             self.midi_in, self.port_name = open_midiinput(2)
+            self.midi_in.ignore_types(timing=False)
+            self.counter = 0
             log.info(f"Using MIDI input port: {self.port_name}")
         except (EOFError, KeyboardInterrupt):
             return 1
