@@ -80,7 +80,7 @@ class Player():
                 current_time - self.ext_last_beat_time_ms) * 1000
             external_bpm = 60000 / last_beat_elapsed_time_ms
             log.debug(
-                f"Beat from the T clock. Elapsed time since last beat: {last_beat_elapsed_time_ms:.4f} ms. External BPM: {external_bpm:.4f}")
+                f"Beat from the DT clock. Elapsed time since last beat: {last_beat_elapsed_time_ms:.4f} ms. External BPM: {external_bpm:.4f}")
             self.tempo.set_bpm(external_bpm)
         self.ext_last_beat_time_ms = current_time
 
