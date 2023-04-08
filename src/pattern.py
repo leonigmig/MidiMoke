@@ -150,8 +150,10 @@ class NoteOn(GenericEvent):
         super(NoteOn, self).__init__(tick, insertion_order)
 
     def __eq__(self, other):
-        return (self.evtname == other.evtname and self.tick == other.tick and
-                self.pitch == other.pitch and self.channel == other.channel)
+        return (self.evtname == other.evtname
+                and self.tick == other.tick
+                and self.pitch == other.pitch
+                and self.channel == other.channel)
 
     # In Python 3, a class which overrides __eq__ also needs
     # to provide __hash__,
