@@ -6,7 +6,7 @@ start: venv
 
 m21: venv
 	. venv/bin/activate && \
-	python src/m21.py
+	python src/main21.py 'Elektron Digitakt' OP-Z
 
 lint:
 	. venv/bin/activate && \
