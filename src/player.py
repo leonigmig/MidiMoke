@@ -10,11 +10,10 @@ log = logging.getLogger(__name__)
 
 class Player():
     def __init__(self, stream, port):
-        if stream or port is None:
+        if stream is None or port is None:
             raise ValueError("stream and port must be set")
 
         self.play = False
-        self.tick = 0
         self.loop = asyncio.get_event_loop()
 
         self.stream = stream
@@ -42,7 +41,6 @@ class Player():
     def handle_midi_stop_message(self):
         self.play = False
         self.midi_port.all_notes_off()
-        self.tick = 0
 
     def handle_midi_timing_message(self):
         if self.play:
@@ -59,17 +57,6 @@ class Player():
                     self.midi_port.note_off(event.pitch)
         except KeyError:
             pass
-
-    def every_external_beat(self, message, timestamp):
-        current_time = time.perf_counter()
-        if self.ext_last_beat_time_ms is not None:
-            last_beat_elapsed_time_ms = (
-                current_time - self.ext_last_beat_time_ms) * 1000
-            external_bpm = 60000 / last_beat_elapsed_time_ms
-            log.debug(
-                f"Beat from the ext clock. Elapsed time since last beat: {last_beat_elapsed_time_ms:.4f} ms. External BPM: {external_bpm:.4f}")
-            self.tempo.set_bpm(external_bpm)
-        self.ext_last_beat_time_ms = current_time
 
     def _log_timing(self, time_ref):
         current_time = time.perf_counter()

@@ -1,6 +1,6 @@
 import sys
 import logging
-import rtmidi
+from rtmidi import MidiOut
 from rtmidi.midiutil import open_midiinput
 from rtmidi.midiconstants import (TIMING_CLOCK, SONG_CONTINUE, SONG_START,
                                   SONG_STOP)
@@ -8,32 +8,32 @@ import rtmidi.midiconstants as midi
 
 log = logging.getLogger(__name__)
 
-midiout = rtmidi.MidiOut()
 
-
-def midi_device_id_for(device_name):
-    ports = midiout.get_ports()
-    if device_name in ports:
-        return ports.index(device_name)
-    else:
-        log.error(f"Could not find MIDI device {device_name} in {ports}")
-        exit()
 
 
 class MidiPort:
     def __init__(self, midi_device_name=None):
+        self.rt = MidiOut()
         if midi_device_name is None:
             log.error("A MIDI device name is required")
         else:
-            self.midi_device_id = midi_device_id_for(midi_device_name)
+            self.midi_device_id = self.midi_device_id_for(midi_device_name)
             try:
-                self.midi_port = midiout.open_port(self.midi_device_id)
+                self.midi_port = MidiOut().open_port(self.midi_device_id)
                 log.info(f"Opened {midi_device_name} for MIDI output")
                 self.midi_in, self.port_name = open_midiinput(self.midi_device_id)
                 self.midi_in.ignore_types(timing=False)
                 log.info(f"Subscribing to {self.port_name} for MIDI input")
             except (EOFError, KeyboardInterrupt):
                 sys.exit("failed to open MIDI output port")
+
+    def midi_device_id_for(self, device_name):
+        ports = self.rt.get_ports()
+        if device_name in ports:
+            return ports.index(device_name)
+        else:
+            log.error(f"Could not find MIDI device {device_name} in {ports}")
+        exit()
 
     def send_message(self, message):
         self.midi_port.send_message(message)
@@ -56,7 +56,7 @@ class MidiPort:
             log.debug("Starting player in respose to external MIDI message")
             self.start_handler()
         elif msg[0] is SONG_STOP:
-            log.debug("stop that song")
+            log.debug("Stopping player in respose to external MIDI message")
             self.stop_handler()
         elif msg[0] is TIMING_CLOCK:
             self.clock_handler()
