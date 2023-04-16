@@ -1,6 +1,9 @@
 Simple sequencer
 ----------------
 
+![A peculiar device](docs/source/_static/mok.png)
+
+
 Just a simple event based sequencer implemented in a pure Python functional style, following functional idioms where possible and using a functional / object oriented hybrid programming paradigm. For example data structures are immutable, so once defined cannot be changed.
 
 Player
