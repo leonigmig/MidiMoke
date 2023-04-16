@@ -36,7 +36,7 @@ def get_stream():
         arpeggio.append(arpeggio_note)
 
     melodic_techno_lead = '''
-    C16 E- G C
+    C16 E G C
     '''
 
     lead_line = converter.parse("tinyNotation: " + melodic_techno_lead)

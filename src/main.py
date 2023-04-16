@@ -1,51 +1,10 @@
-import sys
-
 from rich.logging import RichHandler
 import climax as shell
 import logging
 
-from movement import make_movement
 from midiport import MidiPort
-from pattern import Pattern
-from player import Player, Tempo
-
-
-def make_test_pattern():
-    """Or demo pattern.
-    """
-    pattern = Pattern()
-    pattern.addNote(
-        pitch=60, tick=0, duration=1, volume=100)
-    pattern.addNote(
-        pitch=60, tick=2, duration=1, volume=100)
-    pattern.addNote(
-        pitch=64, tick=1, duration=1, volume=100)
-    pattern.addNote(
-        pitch=64, tick=2, duration=2, volume=100)
-    pattern.addNote(
-        pitch=72, tick=3, duration=1, volume=100)
-    return pattern
-
-
-def play_at_this_speed_to_this_midibus(bpm, out):
-    """Core time loop for playing a movement.
-    """
-
-    sys.setrecursionlimit(2000)
-
-    movement = make_movement(make_test_pattern(), 3)
-    try:
-        player = Player(
-            bpm,
-            movement,
-            out
-        )
-
-        player.start(0)
-
-    except RecursionError as e:
-        log(e)
-        log("That's enough of that!")
+from m21 import get_stream
+from player import Player
 
 
 def init_logging():
@@ -60,20 +19,21 @@ log = init_logging()
 
 
 @shell.command()
-@shell.argument('midi_in', help='transport, sync, event midi port to bind to')
-@shell.argument('midi_out', help='primary midi output bus for notes, events')
-def initialise_event_loop(midi_in, midi_out):
-    """Connect to MIDI, prepare access to device hardware clock,
-    load movement and app settings from configuration then play.
+@shell.argument('midi_device', help='transport, sync, event midi port to bind to')
+def initialise_event_loop(midi_device):
+    """
+    Configure and initialise the event loop.
     """
 
-    log.info("✨🦋 MIDI Moke alphav0.1 🦋✨")
+    log.info("✨🦋 MIDI Moke - software midi friend - 🦋✨")
 
-    bpm = Tempo(120)
-    out = MidiPort(midi_out)
+    player = Player(
+        get_stream(),
+        MidiPort(midi_device)
+    )
 
-    play_at_this_speed_to_this_midibus(bpm, out)
+    player.start()
 
 
 if __name__ == '__main__':
-    initialise_event_loop()
+    initialise_event_loop()   # type: ignore

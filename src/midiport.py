@@ -1,10 +1,10 @@
 import sys
 import logging
 import rtmidi
+from rtmidi.midiutil import open_midiinput
+from rtmidi.midiconstants import (TIMING_CLOCK, SONG_CONTINUE, SONG_START,
+                                  SONG_STOP)
 import rtmidi.midiconstants as midi
-
-from pattern import NoteOff, NoteOn
-
 
 log = logging.getLogger(__name__)
 
@@ -16,32 +16,51 @@ def midi_device_id_for(device_name):
     if device_name in ports:
         return ports.index(device_name)
     else:
-        return None
+        log.error(f"Could not find MIDI device {device_name} in {ports}")
+        exit()
 
 
 class MidiPort:
-    def __init__(self, device_name=None):
-        if device_name is None:
-            midiout.open_virtual_port("My virtual output")
+    def __init__(self, midi_device_name=None):
+        if midi_device_name is None:
+            log.error("A MIDI device name is required")
         else:
+            self.midi_device_id = midi_device_id_for(midi_device_name)
             try:
-                self.midiout = midiout.open_port(
-                    midi_device_id_for(device_name))
-                log.info(f"Opened {device_name} for MIDI output")
+                self.midi_port = midiout.open_port(self.midi_device_id)
+                log.info(f"Opened {midi_device_name} for MIDI output")
+                self.midi_in, self.port_name = open_midiinput(self.midi_device_id)
+                self.midi_in.ignore_types(timing=False)
+                log.info(f"Subscribing to {self.port_name} for MIDI input")
             except (EOFError, KeyboardInterrupt):
                 sys.exit("failed to open MIDI output port")
 
     def send_message(self, message):
-        self.midiout.send_message(message)
+        self.midi_port.send_message(message)
 
     def note_on(self, pitch):
-        self.midiout.send_message([midi.NOTE_ON, pitch, 100])
+        self.midi_port.send_message([midi.NOTE_ON, pitch, 100])
 
     def note_off(self, pitch):
-        self.midiout.send_message([midi.NOTE_OFF, pitch, 0])
+        self.midi_port.send_message([midi.NOTE_OFF, pitch, 0])
 
-    def send_event(self, event):
-        if isinstance(event, NoteOn):
-            self.note_on(event.pitch)
-        elif isinstance(event, NoteOff):
-            self.note_off(event.pitch)
+    def register_input_handler(self, start_handler, stop_handler, clock_handler):
+        self.start_handler = start_handler
+        self.stop_handler = stop_handler
+        self.clock_handler = clock_handler
+        self.midi_in.set_callback(self.handle_midi_input)
+
+    def handle_midi_input(self, message, timestamp):
+        msg, timestamp = message
+        if msg[0] in (SONG_START, SONG_CONTINUE):
+            log.debug("Starting player in respose to external MIDI message")
+            self.start_handler()
+        elif msg[0] is SONG_STOP:
+            log.debug("stop that song")
+            self.stop_handler()
+        elif msg[0] is TIMING_CLOCK:
+            self.clock_handler()
+
+    def all_notes_off(self):
+        for channel in range(16):
+            self.midi_port.send_message([0xB0 + channel, 0x7B, 0])

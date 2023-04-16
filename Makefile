@@ -1,12 +1,12 @@
 
 
-start: venv
+ext: venv
 	. venv/bin/activate && \
-	python src/main.py 'Elektron Digitakt' OP-Z
+	python src/main.py 'Elektron Digitakt'
 
-m21: venv
+int: venv
 	. venv/bin/activate && \
-	python src/main21.py 'Elektron Digitakt' OP-Z
+	python src/main.py 'IAC Driver Bus 1'
 
 lint:
 	. venv/bin/activate && \
