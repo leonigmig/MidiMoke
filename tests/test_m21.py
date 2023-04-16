@@ -1,6 +1,7 @@
 import unittest
 
-from m21 import get_stream, convert_music21_stream
+from m21 import get_stream
+from movement import convert_music21_stream
 
 
 class TestM21(unittest.TestCase):

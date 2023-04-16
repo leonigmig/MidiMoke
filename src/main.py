@@ -2,7 +2,7 @@ from rich.logging import RichHandler
 import climax as shell
 import logging
 
-from midiport import MidiPort
+from mididevice import MidiDevice
 from m21 import get_stream
 from player import Player
 
@@ -29,7 +29,7 @@ def initialise_event_loop(midi_device):
 
     player = Player(
         get_stream(),
-        MidiPort(midi_device)
+        MidiDevice(midi_device)
     )
 
     player.start()

@@ -2,6 +2,8 @@
 
 import logging
 
+from music21 import midi
+
 log = logging.getLogger(__name__)
 
 
@@ -30,3 +32,26 @@ def make_movement(pattern_1, pattern_2, length=float("inf")):
         return notes, duration
 
     return movement
+
+def convert_music21_stream(stream):
+    # Convert the Music21 stream into a MIDI stream
+    midi_stream = midi.translate.streamToMidiFile(stream)
+
+    scaling_factor = 24 / 1024
+
+    result = {}
+    tick = 0
+
+    for event in midi_stream.tracks[1].events:
+        event.time = round(event.time * scaling_factor)
+        if event.isDeltaTime():
+            if event.time > 0:
+                tick += event.time
+        if event.isNoteOn() or event.isNoteOff():
+            if tick in result:
+                result[tick].append(event)
+            else:
+                result[tick] = [event]
+
+    return result
+

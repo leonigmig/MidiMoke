@@ -1,6 +1,6 @@
 import sys
 import logging
-from rtmidi import MidiOut
+from rtmidi import MidiOut  # type: ignore
 from rtmidi.midiutil import open_midiinput
 from rtmidi.midiconstants import (TIMING_CLOCK, SONG_CONTINUE, SONG_START,
                                   SONG_STOP)
@@ -9,14 +9,12 @@ import rtmidi.midiconstants as midi
 log = logging.getLogger(__name__)
 
 
-
-
-class MidiPort:
+class MidiDevice:
     def __init__(self, midi_device_name=None):
-        self.rt = MidiOut()
         if midi_device_name is None:
             log.error("A MIDI device name is required")
         else:
+            self.rt = MidiOut()
             self.midi_device_id = self.midi_device_id_for(midi_device_name)
             try:
                 self.midi_port = MidiOut().open_port(self.midi_device_id)

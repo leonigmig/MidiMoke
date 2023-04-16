@@ -3,7 +3,7 @@ import time
 
 import logging
 
-from m21 import convert_music21_stream
+from movement import convert_music21_stream
 
 log = logging.getLogger(__name__)
 
