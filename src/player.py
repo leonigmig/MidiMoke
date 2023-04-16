@@ -10,6 +10,9 @@ log = logging.getLogger(__name__)
 
 class Player():
     def __init__(self, stream, port):
+        if stream or port is None:
+            raise ValueError("stream and port must be set")
+
         self.play = False
         self.tick = 0
         self.loop = asyncio.get_event_loop()
