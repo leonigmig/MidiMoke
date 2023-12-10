@@ -6,7 +6,11 @@ ext: venv
 
 int: venv
 	. venv/bin/activate && \
-	python src/main.py 'IAC Driver Bus 1'
+	python src/main.py 'Midi Through:Midi Through Port-0 10'
+
+lang: venv
+	. venv/bin/activate && \
+	python src/langchain.py
 
 lint:
 	. venv/bin/activate && \
