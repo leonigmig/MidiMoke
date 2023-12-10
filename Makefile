@@ -1,4 +1,4 @@
-
+export OPENAI_API_KEY=$(shell cat api_key.txt)
 
 ext: venv
 	. venv/bin/activate && \
@@ -10,7 +10,11 @@ int: venv
 
 lang: venv
 	. venv/bin/activate && \
-	python src/langchain.py
+	python src/lchain.py
+
+shell: venv
+	. venv/bin/activate && \
+	python
 
 lint:
 	. venv/bin/activate && \

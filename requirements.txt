@@ -3,3 +3,5 @@ climax
 flake8
 rich
 music21
+langchain
+openai

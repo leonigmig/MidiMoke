@@ -4,3 +4,4 @@ docs/.venv/
 docs/html/
 __pycache__
 .vscode/
+api_key.txt
